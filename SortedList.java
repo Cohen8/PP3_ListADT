@@ -5,12 +5,11 @@ import interfaces.ListInterface;
 
 public class SortedList<E> implements ListInterface<E> {
 
-	protected DLLNode<E> head;
+	protected DLLNode<E> head;  
 	protected DLLNode<E> tail;
-	protected DLLNode<E> ipos;
-	protected DLLNode<E> bpos;
-	
-	protected int size;
+	protected DLLNode<E> ipos; 	// Iterator position
+	protected DLLNode<E> bpos; 	// Back iterator position
+	protected int size;			// Number of elements
 	
 	public SortedList() {
 		head = null;
@@ -23,13 +22,14 @@ public class SortedList<E> implements ListInterface<E> {
 	public void add(E element) {
 		
 		DLLNode<E> newNode = new DLLNode<E>(element);
-	
-		switch(size()) {	
-			case 0:
-				head = newNode;
+							// Protocol for adding more than one element is
+		switch(size()) {	// different for a list of size 0, 1, and many. 
+			case 0:			// No boolean logic because list is empty.
+				head = newNode;		
 				break;
-			case 1:
-				if(((Comparable<E>)element).compareTo(head.getInfo()) > 0) {
+			case 1:			// There is 1 element in the list. The new element
+							// will be placed either before or after.
+				if(((Comparable<E>)element).compareTo(head.getInfo()) > 0) {	
 					head.setNext(newNode);
 					newNode.setPrev(head);
 					tail = newNode;
@@ -40,33 +40,36 @@ public class SortedList<E> implements ListInterface<E> {
 					head = newNode;
 				}
 				break;	
-			default:
+			default:		// There are many elements in the list.
+							// The new element could belong anywhere.
 				DLLNode<E> ptr = head;
-				while(ptr.getNext() != null) {
-					if (((Comparable<E>)element).compareTo(ptr.getInfo()) > 0) {
+				while(ptr.getNext() != null) {		// Stop at the tail.
+					if (((Comparable<E>)element).compareTo(ptr.getInfo()) > 0) {	
 						ptr = ptr.getNext();
-						continue;
+						continue;					
 					}
 					break;	
 				}
-				if(ptr.getPrev() == null) {
+				if(ptr.getPrev() == null) {	
+					// Pointer is at the head.
 					newNode.setNext(ptr);
 					ptr.setPrev(newNode);
 					head = newNode;
-				} else if (ptr.getNext() == null){
+				} else if (ptr.getNext() == null){ 
+					// Pointer is at the tail.
 					newNode.setPrev(ptr);
 					ptr.setNext(newNode);
 					tail = newNode;
 				} else {
+					// Pointer is in between.
 					ptr.getPrev().setNext(newNode);
 					newNode.setPrev(ptr.getPrev());
 					newNode.setNext(ptr);
 					ptr.setPrev(newNode);
 				}
 			}
-		
-		size++;
-		resetIterator();
+		size++;					// Increment number of elements.
+		resetIterator();		// Reset iterator and back iterator.
 		resetBackIterator();
 	}
 
