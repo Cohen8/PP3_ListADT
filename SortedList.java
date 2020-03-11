@@ -10,9 +10,12 @@ public class SortedList<E> implements ListInterface<E> {
 	protected DLLNode<E> ipos;
 	protected DLLNode<E> bpos;
 	
+	protected int size;
+	
 	public SortedList() {
 		head = null;
 		tail = null;
+		size = 0;
 	}
 	
 	@Override
@@ -61,7 +64,8 @@ public class SortedList<E> implements ListInterface<E> {
 					ptr.setPrev(newNode);
 				}
 			}
-			
+		
+		size++;
 		resetIterator();
 		resetBackIterator();
 	}
@@ -69,17 +73,12 @@ public class SortedList<E> implements ListInterface<E> {
 	@Override
 	public boolean remove(E element) {
 		// TODO Auto-generated method stub
+		size--;
 		return false;
 	}
 
 	@Override
 	public int size() {
-		DLLNode<E> ptr = head;
-		int size = 0;
-		while(ptr != null) {
-			ptr = ptr.getNext();
-			size++;
-		}
 		return size;
 	}
 
@@ -130,6 +129,7 @@ public class SortedList<E> implements ListInterface<E> {
 		return element;
 	}
 	
+	@Override
 	public String toString() {
 		String str = "-HEAD-";
 		DLLNode<E> ptr = head;
