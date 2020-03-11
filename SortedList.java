@@ -9,7 +9,7 @@ public class SortedList<E> implements ListInterface<E> {
 	protected DLLNode<E> tail;
 	protected DLLNode<E> ipos; 	// Iterator position
 	protected DLLNode<E> bpos; 	// Back iterator position
-	protected int size;			// Number of elements
+	protected int size;		// Number of elements
 	
 	public SortedList() {
 		head = null;
@@ -22,13 +22,13 @@ public class SortedList<E> implements ListInterface<E> {
 	public void add(E element) {
 		
 		DLLNode<E> newNode = new DLLNode<E>(element);
-							// Protocol for adding more than one element is
+					// Protocol for adding more than one element is
 		switch(size()) {	// different for a list of size 0, 1, and many. 
-			case 0:			// No boolean logic because list is empty.
+			case 0:		// No boolean logic because list is empty.
 				head = newNode;		
 				break;
-			case 1:			// There is 1 element in the list. The new element
-							// will be placed either before or after.
+			case 1:		// There is 1 element in the list. The new element
+					// will be placed either before or after.
 				if(((Comparable<E>)element).compareTo(head.getInfo()) > 0) {	
 					head.setNext(newNode);
 					newNode.setPrev(head);
@@ -40,10 +40,10 @@ public class SortedList<E> implements ListInterface<E> {
 					head = newNode;
 				}
 				break;	
-			default:		// There are many elements in the list.
-							// The new element could belong anywhere.
+			default:	// There are many elements in the list.
+					// The new element could belong anywhere.
 				DLLNode<E> ptr = head;
-				while(ptr.getNext() != null) {		// Stop at the tail.
+				while(ptr.getNext() != null) {	// Stop at the tail.
 					if (((Comparable<E>)element).compareTo(ptr.getInfo()) > 0) {	
 						ptr = ptr.getNext();
 						continue;					
@@ -68,8 +68,8 @@ public class SortedList<E> implements ListInterface<E> {
 					ptr.setPrev(newNode);
 				}
 			}
-		size++;					// Increment number of elements.
-		resetIterator();		// Reset iterator and back iterator.
+		size++;			// Increment number of elements.
+		resetIterator();	// Reset iterator and back iterator.
 		resetBackIterator();
 	}
 
